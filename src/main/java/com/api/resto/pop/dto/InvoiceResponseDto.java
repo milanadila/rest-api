@@ -29,9 +29,5 @@ public class InvoiceResponseDto {
 
     private BigDecimal totalAmount;
 
-//    private BigDecimal cash;
-//
-//    private BigDecimal change;
-
     private BigDecimal discount;
 }

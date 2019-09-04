@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ErrorResponse {
+public class ErrorResponse extends Object{
     public int status;
     public String message;
     public String[] errors;

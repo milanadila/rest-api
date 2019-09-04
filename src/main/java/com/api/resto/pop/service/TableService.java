@@ -3,6 +3,7 @@ package com.api.resto.pop.service;
 import com.api.resto.pop.dto.TableRequestDto;
 import com.api.resto.pop.dto.TableResponseDto;
 import com.api.resto.pop.entity.TableOrder;
+import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class TableService {
     }
 
     public TableOrder findById(Integer id) {
-        return tableRepository.findById(id).orElseThrow(RuntimeException::new);
+        return tableRepository.findById(id).orElseThrow(IdNotFoundException::new);
     }
 
     public TableResponseDto chooseTable(TableRequestDto tableRequestDto) {

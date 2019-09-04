@@ -7,6 +7,7 @@ import com.api.resto.pop.dto.OrderResponseDto;
 import com.api.resto.pop.entity.Invoice;
 import com.api.resto.pop.entity.OrderFood;
 import com.api.resto.pop.entity.TableOrder;
+import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.InvoiceRepository;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,6 @@ public class InvoiceService {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    MenuService menuService;
-
-    @Autowired
     OrderService orderService;
 
 
@@ -34,7 +32,7 @@ public class InvoiceService {
     }
 
     public Invoice findById(Integer id) {
-        return invoiceRepository.findById(id).orElseThrow(RuntimeException::new);
+        return invoiceRepository.findById(id).orElseThrow(IdNotFoundException::new);
     }
 
     public InvoiceResponseDto doPayment(InvoiceRequestDto invoiceRequestDto) {
@@ -89,67 +87,5 @@ public class InvoiceService {
 
         return invoiceResponseDto;
 
-
-
-
-//
-//        if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
-//            BigDecimal discount1 = BigDecimal.valueOf(150000);
-//            invoiceResponseDto.setDiscount(discount1);
-//            BigDecimal totalAfterDiscount1 = totalAmount.subtract(discount1);
-//            invoiceResponseDto.setTotalAmount(totalAfterDiscount1);
-//        } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
-//            BigDecimal discount2 = BigDecimal.valueOf(60000);
-//            invoiceResponseDto.setDiscount(discount2);
-//            BigDecimal totalAfterDiscount2 = totalAmount.subtract(discount2);
-//            invoiceResponseDto.setTotalAmount(totalAfterDiscount2);
-//        } else {
-//            invoiceResponseDto.setTotalAmount(totalAmount);
-//        }
-//
-//
-//        return invoiceResponseDto;
-
-
-//        List<OrderFood> listOrder = orderService.findByIdTable(invoiceRequestDto.getIdTable());
-//        List<InvoiceResponseDto> invoiceResponseDtos = new ArrayList<>();
-//        BigDecimal subTotal = BigDecimal.valueOf(0);
-//        BigDecimal tax;
-//        BigDecimal serviceCharge;
-//        BigDecimal totalAmount;
-//        BigDecimal totalAfterDiscount;
-//        BigDecimal totalAfterDiscount2;
-//        for (OrderFood orderFood: listOrder) {
-//            InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
-//            invoiceResponseDto.setNumberTable(orderFood.getIdTable());
-//            invoiceResponseDto.setIdOrder(orderFood.getIdOrder());
-//            invoiceResponseDto.setNameMenu(orderFood.getNameMenu());
-//            invoiceResponseDto.setPriceMenu(orderFood.getPriceMenu());
-//            invoiceResponseDto.setQuantityMenu(orderFood.getQuantityMenu());
-//            subTotal = subTotal.add(orderFood.getPriceMenu().multiply(new BigDecimal(orderFood.getQuantityMenu())));
-//            invoiceResponseDto.setSubTotal(subTotal);
-//            tax = orderFood.getPriceMenu().multiply(BigDecimal.valueOf(0.10));
-//            invoiceResponseDto.setTax(tax);
-//            serviceCharge = orderFood.getPriceMenu().multiply(BigDecimal.valueOf(0.15));
-//            invoiceResponseDto.setServiceCharge(serviceCharge);
-//            totalAmount = subTotal.add(tax).add(serviceCharge);
-//            if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
-//                totalAfterDiscount = totalAmount.subtract(BigDecimal.valueOf(100000));
-//                invoiceResponseDto.setTotalAmount(totalAfterDiscount);
-//            } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
-//                totalAfterDiscount2 = totalAmount.subtract(BigDecimal.valueOf(60000));
-//                invoiceResponseDto.setTotalAmount(totalAfterDiscount2);
-//            } else {
-//                invoiceResponseDto.setTotalAmount(totalAmount);
-//            }
-//
-//            invoiceResponseDtos.add(invoiceResponseDto);
-//
-//        }
-        //kita udah dapet data dari finDItable
-        //ngeset ke entity sesuai kebutuhan,
-
-
-//        return invoiceResponseDtos;
     }
 }

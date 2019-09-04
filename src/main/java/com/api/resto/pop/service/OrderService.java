@@ -3,8 +3,10 @@ package com.api.resto.pop.service;
 import com.api.resto.pop.dto.MenuResponseDto;
 import com.api.resto.pop.dto.OrderRequestDto;
 import com.api.resto.pop.dto.OrderResponseDto;
+import com.api.resto.pop.entity.Menu;
 import com.api.resto.pop.entity.OrderFood;
 import com.api.resto.pop.entity.TableOrder;
+import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,14 @@ public class OrderService {
     }
 
     public OrderFood findById(Integer id){
-        return orderRepository.findById(id).orElseThrow(RuntimeException::new);
+        return orderRepository.findById(id).orElseThrow(IdNotFoundException::new);
     }
 
     public OrderResponseDto orderFood (OrderRequestDto orderRequestDto) {
         TableOrder table = tableService.findById(orderRequestDto.getIdTable());
         Integer numberTable = table.getNumberTable();
 
-        MenuResponseDto menu = menuService.findById(orderRequestDto.getIdMenu());
+        Menu menu = menuService.findById(orderRequestDto.getIdMenu());
         String nameMenu = menu.getNameMenu();
         BigDecimal priceMenu = menu.getPriceMenu();
 
@@ -65,13 +67,6 @@ public class OrderService {
         return orderResponseDto;
     }
 
-<<<<<<< HEAD
-=======
-    public List<OrderFood> findByIdTable(Integer id) {
-        return orderRepository.findByIdTable(id);
-    }
-
->>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
     public OrderFood findByIdOrder(Integer id) {
         return orderRepository.findByIdOrder(id);
     }

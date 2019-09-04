@@ -49,9 +49,4 @@ public class Invoice{
     @Column(name = "Discount")
     private BigDecimal discount;
 
-//    @Column(name = "Cash")
-//    private BigDecimal cash;
-//
-//    @Column(name = "Change")
-//    private BigDecimal change;
 }

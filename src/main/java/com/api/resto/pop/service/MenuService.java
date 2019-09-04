@@ -2,16 +2,17 @@ package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.MenuResponseDto;
 import com.api.resto.pop.entity.Menu;
+import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.MenuRepository;
+import jdk.nashorn.internal.ir.Optimistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Optional;
-=======
->>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
+
 
 @Service
 public class MenuService {
@@ -33,15 +34,12 @@ public class MenuService {
         return listMenuDto;
     }
 
-    public MenuResponseDto findById(Integer id) {
-<<<<<<< HEAD
-=======
+    public Menu findById(Integer id) {
 
->>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
-        Menu menu = menuRepository.findByIdMenu(id);
-        MenuResponseDto menuResponseDto = new MenuResponseDto();
-        menuResponseDto.setNameMenu(menu.getNameMenu());
-        menuResponseDto.setPriceMenu(menu.getPriceMenu());
+        Optional<Menu> menu = Optional.of(menuRepository.findById(id).orElseThrow(IdNotFoundException::new));
+        Menu menuResponseDto = new Menu();
+        menuResponseDto.setNameMenu(menu.get().getNameMenu());
+        menuResponseDto.setPriceMenu(menu.get().getPriceMenu());
 
         return menuResponseDto;
     }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 @ControllerAdvice
-public class HandlerException {
+public class HandlerExceptionController {
     @ExceptionHandler(Exception.class)
     ResponseEntity<ErrorResponse> exceptionHandler(Exception e) {
         log.error(e.getMessage(), e);
@@ -17,7 +17,7 @@ public class HandlerException {
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.builder()
                         .status(404)
-                        .message(e.getClass().getSimpleName() + ".class Unexpected Error")
+                        .message("Unexpected Error")
                         .errors(new String[]{e.getMessage()})
                         .build()
                 );

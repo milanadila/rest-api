@@ -2,19 +2,14 @@ package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.InvoiceResponseDto;
 import com.api.resto.pop.dto.InvoiceRequestDto;
-import com.api.resto.pop.dto.MenuResponseDto;
-import com.api.resto.pop.dto.OrderResponseDto;
 import com.api.resto.pop.entity.Invoice;
 import com.api.resto.pop.entity.OrderFood;
-import com.api.resto.pop.entity.TableOrder;
 import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.InvoiceRepository;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +35,7 @@ public class InvoiceService {
         OrderFood order = orderService.findByIdOrder(invoiceRequestDto.getIdOrder());
         Integer getIdOrder = order.getIdOrder();
         Integer getIdTable = order.getIdTable();
+        Integer getIdMenu = order.getIdMenu();
         Integer getNumberTable = order.getNumberTable();
         String getNameMenu = order.getNameMenu();
         BigDecimal getPriceMenu = order.getPriceMenu();
@@ -51,14 +47,30 @@ public class InvoiceService {
         BigDecimal totalAmount = subTotal.add(tax).add(serviceCharge);
         BigDecimal discount1 = BigDecimal.valueOf(100000);
         BigDecimal discount2 = BigDecimal.valueOf(60000);
-        BigDecimal totalAmountAfterDiscount1;
-        BigDecimal totalAmountAfterDiscount2;
+        BigDecimal totalAmountAfterDiscount1 = totalAmount.subtract(discount1);
+        BigDecimal totalAmountAfterDiscount2 = totalAmount.subtract(discount2);
 
         Invoice invoice = new Invoice();
         invoice.setIdOrder(invoiceRequestDto.getIdOrder());
         invoice.setIdTable(invoiceRequestDto.getIdTable());
         invoice.setNameMenu(getNameMenu);
         invoice.setPriceMenu(getPriceMenu);
+        invoice.setIdMenu(getIdMenu);
+        invoice.setNumberTable(getNumberTable);
+        invoice.setQuantityMenu(getQuantityMenu);
+        invoice.setServiceCharge(serviceCharge);
+        invoice.setSubTotal(subTotal);
+        invoice.setTax(tax);
+        if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
+            invoice.setDiscount(discount1);
+            invoice.setTotalAmount(totalAmountAfterDiscount1);
+        } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
+            invoice.setDiscount(discount2);
+            invoice.setTotalAmount(totalAmountAfterDiscount2);
+        } else {
+            invoice.setDiscount(BigDecimal.valueOf(0));
+            invoice.setTotalAmount(totalAmount);
+        }
         invoiceRepository.save(invoice);
 
         InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
@@ -74,11 +86,9 @@ public class InvoiceService {
         invoiceResponseDto.setServiceCharge(serviceCharge);
         if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
             invoiceResponseDto.setDiscount(discount1);
-            totalAmountAfterDiscount1 = totalAmount.subtract(discount1);
             invoiceResponseDto.setTotalAmount(totalAmountAfterDiscount1);
         } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
             invoiceResponseDto.setDiscount(discount2);
-            totalAmountAfterDiscount2 = totalAmount.subtract(discount2);
             invoiceResponseDto.setTotalAmount(totalAmountAfterDiscount2);
         } else {
             invoiceResponseDto.setDiscount(BigDecimal.valueOf(0));
@@ -87,5 +97,9 @@ public class InvoiceService {
 
         return invoiceResponseDto;
 
+    }
+
+    public Invoice findByIdInvoice(Integer id) {
+        return invoiceRepository.findByIdInvoice(id);
     }
 }

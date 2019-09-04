@@ -18,3 +18,5 @@ INSERT INTO table_order(Id_Table, Number_Table) VALUES
 (1, 1),
 (2, 2);
 
+INSERT  INTO transaction_invoice(Id_Transaction, Id_Invoice, Total_Amount, Cash, Change) VALUES
+(1, 1, 150000.00, 200000.00, 50000.00);

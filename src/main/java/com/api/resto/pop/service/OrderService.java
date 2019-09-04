@@ -1,6 +1,5 @@
 package com.api.resto.pop.service;
 
-import com.api.resto.pop.dto.MenuResponseDto;
 import com.api.resto.pop.dto.OrderRequestDto;
 import com.api.resto.pop.dto.OrderResponseDto;
 import com.api.resto.pop.entity.Menu;

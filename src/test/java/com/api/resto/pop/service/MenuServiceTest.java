@@ -3,7 +3,6 @@ package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.MenuResponseDto;
 import com.api.resto.pop.entity.Menu;
-import com.api.resto.pop.exception.IdNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;

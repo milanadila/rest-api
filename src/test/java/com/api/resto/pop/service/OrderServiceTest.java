@@ -61,6 +61,7 @@ public class OrderServiceTest {
         assertThat(orderResponseDto.getIdTable()).isEqualTo(idTable);
         assertThat(orderResponseDto.getQuantityMenu()).isEqualTo(quantityMenu);
     }
+<<<<<<< HEAD
 
     @Test
     public void cancelOrder() {
@@ -71,4 +72,6 @@ public class OrderServiceTest {
         List<OrderFood> orderServiceAll = orderService.findAll();
         assertThat(orderFoods.size()).isGreaterThan(orderServiceAll.size());
     }
+=======
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
 }

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Optional;
+=======
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
 
 @Service
 public class MenuService {
@@ -31,6 +34,10 @@ public class MenuService {
     }
 
     public MenuResponseDto findById(Integer id) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
         Menu menu = menuRepository.findByIdMenu(id);
         MenuResponseDto menuResponseDto = new MenuResponseDto();
         menuResponseDto.setNameMenu(menu.getNameMenu());

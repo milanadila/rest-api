@@ -65,6 +65,13 @@ public class OrderService {
         return orderResponseDto;
     }
 
+<<<<<<< HEAD
+=======
+    public List<OrderFood> findByIdTable(Integer id) {
+        return orderRepository.findByIdTable(id);
+    }
+
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
     public OrderFood findByIdOrder(Integer id) {
         return orderRepository.findByIdOrder(id);
     }

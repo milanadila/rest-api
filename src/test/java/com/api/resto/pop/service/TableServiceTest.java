@@ -1,6 +1,9 @@
 package com.api.resto.pop.service;
 
+<<<<<<< HEAD
 import com.api.resto.pop.dto.TableRequestDto;
+=======
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
 import com.api.resto.pop.dto.TableResponseDto;
 import com.api.resto.pop.entity.TableOrder;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +41,7 @@ public class TableServiceTest {
                 .hasFieldOrProperty("idTable")
                 .hasFieldOrProperty("numberTable");
     }
+<<<<<<< HEAD
 
     @Test
     public void chooseTable() {
@@ -50,4 +54,6 @@ public class TableServiceTest {
         TableResponseDto tableResponseDto = tableService.chooseTable(tableRequestDto);
         assertThat(tableResponseDto.getNumberTable()).isEqualTo(numberTable);
     }
+=======
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
 }

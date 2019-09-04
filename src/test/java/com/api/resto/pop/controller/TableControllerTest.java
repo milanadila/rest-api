@@ -47,12 +47,17 @@ public class TableControllerTest {
     @Test
     public void findById() throws Exception {
         Integer id = 1;
+<<<<<<< HEAD
         mockMvc.perform(get("/table/" + id)
+=======
+        mockMvc.perform(get("/table" + id)
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.messsage", Matchers.is("Success show table by id")))
                 .andExpect(jsonPath("$.*", Matchers.hasSize(2)));
     }
+<<<<<<< HEAD
 
     @Test
     public void chooseTable() throws Exception {
@@ -67,4 +72,6 @@ public class TableControllerTest {
                 .andExpect(jsonPath("$.messsage", Matchers.is("Success choose table")))
                 .andExpect(jsonPath("$.*", Matchers.hasSize(2)));
     }
+=======
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
 }

@@ -47,7 +47,11 @@ public class MenuControllerTest {
     @Test
     public void findById() throws Exception {
         Integer id = 1;
+<<<<<<< HEAD
         mockMvc.perform(get("/menu/" + id)
+=======
+        mockMvc.perform(get("/menu" + id)
+>>>>>>> 99ef156e354175c49534aaf92645d73f3c6a9012
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.messsage", Matchers.is("Success show menu by id")))

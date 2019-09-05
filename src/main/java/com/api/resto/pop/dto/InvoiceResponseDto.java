@@ -27,7 +27,7 @@ public class InvoiceResponseDto {
 
     private BigDecimal serviceCharge;
 
-    private BigDecimal totalAmount;
-
     private BigDecimal discount;
+
+    private BigDecimal totalAmount;
 }

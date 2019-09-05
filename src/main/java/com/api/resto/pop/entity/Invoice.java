@@ -43,10 +43,10 @@ public class Invoice{
     @Column(name = "Service_Charge")
     private BigDecimal serviceCharge;
 
-    @Column(name = "Total_Amount")
-    private BigDecimal totalAmount;
-
     @Column(name = "Discount")
     private BigDecimal discount;
+
+    @Column(name = "Total_Amount")
+    private BigDecimal totalAmount;
 
 }

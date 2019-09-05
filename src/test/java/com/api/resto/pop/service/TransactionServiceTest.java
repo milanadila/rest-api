@@ -2,12 +2,9 @@ package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.TransactionRequestDto;
 import com.api.resto.pop.dto.TransactionResponseDto;
-import com.api.resto.pop.entity.Invoice;
 import com.api.resto.pop.entity.TransactionInvoice;
 import com.api.resto.pop.exception.IdNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ public class TransactionServiceTest {
 
     @Autowired
     TransactionService transactionService;
-
 
     @Test
     public void findAll() {

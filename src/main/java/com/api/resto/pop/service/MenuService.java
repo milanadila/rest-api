@@ -25,6 +25,7 @@ public class MenuService {
         List<MenuResponseDto> listMenuDto = new ArrayList<>();
         for (Menu menu: listMenu) {
             MenuResponseDto menuResponseDto = new MenuResponseDto();
+            menuResponseDto.setIdMenu(menu.getIdMenu());
             menuResponseDto.setNameMenu(menu.getNameMenu());
             menuResponseDto.setPriceMenu(menu.getPriceMenu());
 
@@ -38,6 +39,7 @@ public class MenuService {
 
         Optional<Menu> menu = Optional.of(menuRepository.findById(id).orElseThrow(IdNotFoundException::new));
         Menu menuResponseDto = new Menu();
+        menuResponseDto.setIdMenu(menu.get().getIdMenu());
         menuResponseDto.setNameMenu(menu.get().getNameMenu());
         menuResponseDto.setPriceMenu(menu.get().getPriceMenu());
 

@@ -39,6 +39,7 @@ public class TransactionService {
         transactionInvoice.setIdInvoice(transactionRequestDto.getIdInvoice());
         transactionInvoice.setCash(transactionRequestDto.getCash());
         transactionInvoice.setTotalAmount(totalAmount);
+        transactionInvoice.setChange(transactionInvoice.getCash().subtract(totalAmount));
         transactionRepository.save(transactionInvoice);
 
         TransactionResponseDto transactionResponseDto = new TransactionResponseDto();

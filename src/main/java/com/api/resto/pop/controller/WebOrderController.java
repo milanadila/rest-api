@@ -33,7 +33,7 @@ public class WebOrderController {
 
     @GetMapping(value = "viewOrder")
     public ModelAndView orderGet() {
-        ModelAndView modelAndView = new ModelAndView("addOrder");
+        ModelAndView modelAndView = new ModelAndView("add-order");
         modelAndView.addObject("Tables", tableService.findAll());
         modelAndView.addObject("Menus", menuService.findAll());
         modelAndView.addObject("Orders", orderService.findAll());
@@ -43,14 +43,14 @@ public class WebOrderController {
 
     @GetMapping(value = "addOrder")
     public ModelAndView orderFoods() {
-        ModelAndView modelAndView= new ModelAndView("addOrder");
+        ModelAndView modelAndView= new ModelAndView("add-order");
 
         return modelAndView;
     }
 
     @PostMapping(value = "addOrder")
     public ModelAndView orderFood(@Valid OrderRequestDto orderRequestDto) {
-        ModelAndView modelAndView = new ModelAndView("detailOrder");
+        ModelAndView modelAndView = new ModelAndView("detail-order");
         modelAndView.addObject("Orders", orderService.orderFood(orderRequestDto));
 
         return modelAndView;

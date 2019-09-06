@@ -14,6 +14,16 @@
     <script>
     </script>
 
+    <script type="text/javascript" th:inline="javascript">
+    function confirmCancelOrder(id){
+        $('#modalCancelOrder').modal()
+        var link = 'cancelOrder/' + id;
+            $('#cancelOrder').html(
+                '<a href="' + link + '"><button type="submit" class="btn btn-outline-danger">Cancel Order</button></a>'
+            );
+    }
+    </script>
+
 </th:block>
 </body>
 </html>

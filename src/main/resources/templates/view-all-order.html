@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout.html}">
+<head>
+    <title>Pop's Resto</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container col-md-6 my-5" th:each="order : ${AllOrder}">
+            <div class="card border-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">Detail Order</div>
+                <div class="card-body text-info">
+                    <tr>
+                        <h5 class="card-title">ID Order: [[${order.idOrder}]]</h5>
+                        <p class="card-text">No Table: [[${order.idTable}]]</p>
+                        <p class="card-text">Food: [[${order.nameMenu}]]</p>
+                        <p class="card-text">Quantity: [[${order.quantityMenu}]]</p>
+                        <a href="/popresto/order/viewOrder" class="btn btn-outline-primary">Go Back</a>
+                    </tr>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

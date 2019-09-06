@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout.html}">
+<head>
+    <title>Pop's Resto</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container my-5">
+        <h2 class="p-3 mb-2 text-center">List Invoice</h2>
+        <table class="table table-hover" id="table-list">
+            <thead>
+            <tr>
+                <th scope="col">ID Invoice</th>
+                <th scope="col">ID Order</th>
+                <th scope="col">ID Table</th>
+                <th scope="col">Number Table</th>
+                <th scope="col">Food</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Tax</th>
+                <th scope="col">Service Charge</th>
+                <th scope="col">Discount</th>
+                <th scope="col">Total Amount</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="invoice : ${AllInvoice}">
+                <th th:text="${invoice.idInvoice}" scope="row">1</th>
+                <td th:text="${invoice.idOrder}"></td>
+                <td th:text="${invoice.idTable}"></td>
+                <td th:text="${invoice.numberTable}"></td>
+                <td th:text="${invoice.nameMenu}"></td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.priceMenu, 0, 'COMMA', 2, 'POINT')}]]</td>
+                <td th:text="${invoice.quantityMenu}"></td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.subTotal, 0, 'COMMA', 2, 'POINT')}]]</td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.tax, 0, 'COMMA', 2, 'POINT')}]]</td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.serviceCharge, 0, 'COMMA', 2, 'POINT')}]]</td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.discount, 0, 'COMMA', 2, 'POINT')}]]</td>
+                <td th:inline="text">Rp. [[${#numbers.formatDecimal(invoice.totalAmount, 0, 'COMMA', 2, 'POINT')}]]</td>
+            </tr>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

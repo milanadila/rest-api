@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout.html}">
+<head>
+    <title>Pop's Resto</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container col-md-6 my-5">
+        <a href="/popresto/transaction/viewAllTransaction" class="btn btn-outline-primary mb-3">View List Transaction</a>
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">Transaction</div>
+            <div class="card-body text-info">
+                <tr th:each="transaction : ${Transaction}">
+                    <h5 class="card-title">ID Transaction: [[${transaction.idTransaction}]]</h5>
+                    <p class="card-text">ID Invoice: [[${transaction.idInvoice}]]</p>
+                    <p class="card-text">Total Amount: Rp. [[${#numbers.formatDecimal(transaction.totalAmount, 0, 'COMMA', 2, 'POINT')}]]</p>
+                    <p class="card-text">Cash: Rp. [[${#numbers.formatDecimal(transaction.cash, 0, 'COMMA', 2, 'POINT')}]]</p>
+                    <p class="card-text">Change: Rp. [[${#numbers.formatDecimal(transaction.change, 0, 'COMMA', 2, 'POINT')}]]</p>
+                    <a href="/popresto/invoice/viewInvoice" class="btn btn-outline-primary">Go Back</a>
+                </tr>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

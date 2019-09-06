@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout.html}">
+<head>
+    <title>Pop's Resto</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container col-md-6 my-5">
+        <a href="/popresto/order/viewAllOrder" class="btn btn-outline-primary mb-3">View All Order</a>
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">Detail Order</div>
+            <div class="card-body text-info">
+                <tr th:each="order : ${Orders}">
+                <h5 class="card-title">ID Order: [[${order.idOrder}]]</h5>
+                <p class="card-text">No Table: [[${order.idTable}]]</p>
+                <p class="card-text">Food: [[${order.nameMenu}]]</p>
+                <p class="card-text">Quantity: [[${order.quantityMenu}]]</p>
+                <a href="/popresto/order/viewOrder" class="btn btn-outline-primary">Go Back</a>
+                    <button class="btn btn-outline-danger" href="">
+                        <a th:onclick="'confirmCancelOrder(' + ${order.idOrder} + ');'" >Cancel Order</a>
+                    </button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="modalCancelOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure want to cancel this Order?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                <a id="cancelOrder">
+                                    <button type="submit" class="btn btn-outline-danger">Cancel Order</button>
+                                </a>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

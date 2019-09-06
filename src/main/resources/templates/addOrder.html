@@ -11,7 +11,7 @@
     <div class = "justify-content-start my-2 mb-2">
         <h2 class="p-3 mb-2 text-center">Order</h2>
     </div>
-    <form th:action="@{/order/doOrder}" th:object="${invoiceRequestDto}" method="post">
+    <form th:action="@{/order/addOrder}" th:object="${orderRequestDto}" method="post">
         <div class="container my-5">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -34,7 +34,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>Quantity</label>
-                    <select class="form-control" name="quantityProduct" required>
+                    <select class="form-control" name="quantityMenu" required>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                            <a th:href="@{viewInvoice}">
+                            <a th:href="@{detailOrder}">
                                 <button type="submit" class="btn btn-outline-success">Order</button>
                             </a>
                         </div>

@@ -4,6 +4,8 @@ import com.api.resto.pop.dto.InvoiceRequestDto;
 import com.api.resto.pop.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,33 @@ public class WebInvoiceController {
 
         return modelAndView;
     }
+//    ModelAndView modelAndView = new ModelAndView("detail-invoice");
+//        if (result.hasErrors()) {
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("detail-invoice");
+//
+//        for (FieldError error: result.getFieldErrors()) {
+//            mav.addObject("result", error.getDefaultMessage());
+//
+//            if (error.getField().equals("idOrder")) {
+//                mav.addObject("errorIdOrder", error.getDefaultMessage());
+//            }
+//
+//            if (error.getField().equals("idTable")) {
+//                mav.addObject("errorIdTable", error.getDefaultMessage());
+//            }
+//        }
+//
+//        mav.addObject("AllInvoice", invoiceRequestDto);
+//        return mav;
+//    }
+//
+//        invoiceService.doPayment(invoiceRequestDto);
+//        modelAndView.addObject("Invoices", invoiceService.findAll());
+//        modelAndView.setViewName("redirect:/popresto/order/detail-invoice");
+//        return modelAndView;
+//}
+
 
     @GetMapping(value = "viewAllInvoice")
     public ModelAndView viewInvoiceAll() {

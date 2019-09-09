@@ -10,10 +10,10 @@ import java.math.BigDecimal;
 public class TransactionRequestDto {
 
     @PositiveOrZero
-    @NotNull
+    @NotNull(message = "Id Invoice Must be Filled")
     private Integer idInvoice;
 
     @PositiveOrZero
-    @NotNull
+    @NotNull(message = "Cash Must be Filled")
     private BigDecimal cash;
 }

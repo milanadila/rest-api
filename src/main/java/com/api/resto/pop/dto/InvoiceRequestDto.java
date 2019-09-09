@@ -9,10 +9,10 @@ import javax.validation.constraints.PositiveOrZero;
 public class InvoiceRequestDto {
 
     @PositiveOrZero
-    @NotNull
+    @NotNull(message = "Id Order Must be Filled")
     private Integer idOrder;
 
     @PositiveOrZero
-    @NotNull
+    @NotNull(message = "Id Table Must be Filled")
     private Integer idTable;
 }

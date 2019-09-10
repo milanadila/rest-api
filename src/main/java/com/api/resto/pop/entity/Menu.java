@@ -19,9 +19,4 @@ public class Menu {
     @Column(name = "Price")
     private BigDecimal priceMenu;
 
-//    @Column(name = "Stock")
-//    private Integer stockMenu;
-//
-//    @Column(name = "Category")
-//    private String category;
 }

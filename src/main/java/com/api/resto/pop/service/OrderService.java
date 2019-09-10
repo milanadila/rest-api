@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -33,6 +34,12 @@ public class OrderService {
 
     public OrderFood findById(Integer id){
         return orderRepository.findById(id).orElseThrow(IdNotFoundException::new);
+    }
+
+    private static HashMap<Integer, OrderResponseDto> orders = new HashMap();
+
+    public  HashMap<Integer, OrderResponseDto> getHashMap() {
+        return  orders;
     }
 
     public OrderResponseDto orderFood (OrderRequestDto orderRequestDto) {
@@ -63,6 +70,8 @@ public class OrderService {
         orderResponseDto.setPriceMenu(priceMenu);
         orderResponseDto.setQuantityMenu(orderFood.getQuantityMenu());
 
+        orders.put(orderFood.getIdOrder(), orderResponseDto);
+        log.info("Yang ini nih: " + orders.toString());
         return orderResponseDto;
     }
 

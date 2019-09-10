@@ -35,4 +35,8 @@ public class TableService {
 
         return tableResponseDto;
     }
+
+    public TableOrder findByIdTable(Integer id) {
+        return tableRepository.findByIdTable(id);
+    }
 }

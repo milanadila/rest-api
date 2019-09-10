@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,4 +31,5 @@ public class OrderFood {
 
     @Column(name = "Quantity_Menu")
     private Integer quantityMenu;
+
 }

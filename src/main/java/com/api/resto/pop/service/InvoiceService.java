@@ -2,15 +2,19 @@ package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.InvoiceResponseDto;
 import com.api.resto.pop.dto.InvoiceRequestDto;
+import com.api.resto.pop.dto.OrderResponseDto;
 import com.api.resto.pop.entity.Invoice;
 import com.api.resto.pop.entity.OrderFood;
+import com.api.resto.pop.entity.TableOrder;
 import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class InvoiceService {
@@ -19,7 +23,10 @@ public class InvoiceService {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    OrderService orderService;
+    TableService tableService;
+
+//    @Autowired
+//    OrderService orderService;
 
 
     public List<Invoice> findAll() {
@@ -30,114 +37,124 @@ public class InvoiceService {
         return invoiceRepository.findById(id).orElseThrow(IdNotFoundException::new);
     }
 
-    public InvoiceResponseDto doPayment(InvoiceRequestDto invoiceRequestDto) {
+    OrderService x = new OrderService();
+    HashMap<Integer, OrderResponseDto> orders = x.getHashMap();
 
-        OrderFood order = orderService.findByIdOrder(invoiceRequestDto.getIdOrder());
-        Integer getIdOrder = order.getIdOrder();
-        Integer getIdTable = order.getIdTable();
-        Integer getIdMenu = order.getIdMenu();
-        Integer getNumberTable = order.getNumberTable();
-        String getNameMenu = order.getNameMenu();
-        BigDecimal getPriceMenu = order.getPriceMenu();
-        Integer getQuantityMenu = order.getQuantityMenu();
+    public InvoiceResponseDto showOrder(Integer tableId) {
+        TableOrder tableOrder = tableService.findByIdTable(tableId);
 
-        BigDecimal subTotal = getPriceMenu.multiply(new BigDecimal(getQuantityMenu));
-        BigDecimal discountA = BigDecimal.valueOf(10000);
-//        BigDecimal discountB = discountA.add(BigDecimal.valueOf(10000));
-//        BigDecimal discount2 = BigDecimal.valueOf(60000);
-        BigDecimal tax = subTotal.multiply(BigDecimal.valueOf(0.10));
-        BigDecimal serviceCharge = subTotal.multiply(BigDecimal.valueOf(0.15));
-        BigDecimal totalAmount = subTotal.add(tax).add(serviceCharge);
-//        BigDecimal totalAmountAfterDiscount1 = totalAmount.subtract(discount1);
-//        BigDecimal totalAmountAfterDiscount2 = totalAmount.subtract(discount2);
 
-        Integer discountQty = getQuantityMenu/5;
-        BigDecimal getDiscount = discountA.multiply(new BigDecimal(discountQty));
-        BigDecimal totalAmountDiscount = BigDecimal.valueOf(0);
-//        BigDecimal maxDiscount = BigDecimal.valueOf(50000);
+//        OrderFood order = orderService.findByIdOrder(invoiceRequestDto.getIdOrder());
+//        Integer getIdOrder = order.getIdOrder();
+//        Integer getIdTable = order.getIdTable();
+//        Integer getIdMenu = order.getIdMenu();
+//        Integer getNumberTable = order.getNumberTable();
+//        String getNameMenu = order.getNameMenu();
+//        BigDecimal getPriceMenu = order.getPriceMenu();
+//        Integer getQuantityMenu = order.getQuantityMenu();
+//        BigDecimal tax = BigDecimal.valueOf(0.1);
+//        BigDecimal serviceCharge = BigDecimal.valueOf(0.15);
 
-        Invoice invoice = new Invoice();
-        invoice.setIdOrder(invoiceRequestDto.getIdOrder());
-        invoice.setIdTable(invoiceRequestDto.getIdTable());
-        invoice.setNameMenu(getNameMenu);
-        invoice.setPriceMenu(getPriceMenu);
-        invoice.setIdMenu(getIdMenu);
-        invoice.setNumberTable(getNumberTable);
-        invoice.setQuantityMenu(getQuantityMenu);
-        invoice.setServiceCharge(serviceCharge);
-        invoice.setSubTotal(subTotal);
-        invoice.setTax(tax);
-//        if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
-//            invoice.setDiscount(discount1);
-//            invoice.setTotalAmount(totalAmountAfterDiscount1);
-//        } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
-//            invoice.setDiscount(discount2);
-//            invoice.setTotalAmount(totalAmountAfterDiscount2);
-//        } else {
-//            invoice.setDiscount(BigDecimal.valueOf(0));
-//            invoice.setTotalAmount(totalAmount);
-//        }
 
-//        for (getQuantityMenu = 0; getQuantityMenu <= 100; getQuantityMenu+=5) {
-//            if (getQuantityMenu % 5 == 0) {
+//        Invoice invoice = new Invoice();
+//        invoice.setIdOrder(invoiceRequestDto.getIdOrder());
+//        invoice.setIdTable(invoiceRequestDto.getIdTable());
+//        invoiceRepository.save(invoice);
 
-//        if (discountQty <= 5) {
-//                invoice.setDiscount(getDiscount);
-//                totalAmountDiscount = (totalAmount.subtract(getDiscount));
-//            } else {
-//            totalAmountDiscount = (totalAmount.subtract(BigDecimal.valueOf(50000)));
-//        }
-//        }
-
-        if (discountQty > 5) {
-            getDiscount = BigDecimal.valueOf(50000);
-        }
-         totalAmountDiscount = totalAmount.subtract(getDiscount);
-
-        invoice.setDiscount(getDiscount);
-        invoice.setTotalAmount(totalAmountDiscount);
-
-        invoiceRepository.save(invoice);
-
-        InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
-        invoiceResponseDto.setIdInvoice(invoice.getIdInvoice());
-        invoiceResponseDto.setIdOrder(getIdOrder);
-        invoiceResponseDto.setNumberTable(getNumberTable);
-        invoiceResponseDto.setIdTable(getIdTable);
-        invoiceResponseDto.setNameMenu(getNameMenu);
-        invoiceResponseDto.setPriceMenu(getPriceMenu);
-        invoiceResponseDto.setQuantityMenu(getQuantityMenu);
+        InvoiceResponseDto  invoiceResponseDto = new InvoiceResponseDto();
+        invoiceResponseDto.setIdTable(tableOrder.getIdTable());
+        invoiceResponseDto.setNumberTable(tableId);
+        invoiceResponseDto.setAllOrder(orders.values());
+        Integer totalQty = totalInvoice().getTotalQty();
+        invoiceResponseDto.setTotalQty(totalQty);
+        BigDecimal subTotal = totalInvoice().getSubTotal();
         invoiceResponseDto.setSubTotal(subTotal);
+        BigDecimal tax = subTotal.multiply(BigDecimal.valueOf(0.1));
         invoiceResponseDto.setTax(tax);
+        BigDecimal serviceCharge = subTotal.multiply(BigDecimal.valueOf(0.15));
         invoiceResponseDto.setServiceCharge(serviceCharge);
-        invoiceResponseDto.setDiscount(getDiscount);
-        invoiceResponseDto.setTotalAmount(totalAmountDiscount);
+        BigDecimal totalAmount = subTotal.add(tax).add(serviceCharge);
+        invoiceResponseDto.setTotalAmount(totalAmount);
 
-//        for (getQuantityMenu = 0; getQuantityMenu <= 100; getQuantityMenu+=5) {
-//            if (discountQty > 0) {
-//            invoiceResponseDto.setDiscount(getDiscount);
-//            BigDecimal totalAmountDiscounts = (totalAmount.subtract(getDiscount));
-//            invoiceResponseDto.setTotalAmount(totalAmountDiscounts);
-//            } else if (discountQty >= 25) {
-//                invoiceResponseDto.setDiscount(BigDecimal.valueOf(50000));
-//                BigDecimal totalAmountDiscounts2 = (totalAmount.subtract(getDiscount));
-//                invoiceResponseDto.setTotalAmount(totalAmountDiscounts2);
-//            }
+
+
+//        BigDecimal subTotal = getPriceMenu.multiply(new BigDecimal(getQuantityMenu));
+//        BigDecimal discount = BigDecimal.valueOf(10000);
+//        BigDecimal tax = subTotal.multiply(BigDecimal.valueOf(0.10));
+//        BigDecimal serviceCharge = subTotal.multiply(BigDecimal.valueOf(0.15));
+//        BigDecimal totalAmount = subTotal.add(tax).add(serviceCharge);
 //
+//        Integer discountQty = getQuantityMenu/5;
+//        BigDecimal getDiscount = discount.multiply(new BigDecimal(discountQty));
+//        BigDecimal totalAmountDiscount;
 
-//        if (totalAmount.compareTo(BigDecimal.valueOf(500000)) > 0) {
-//            invoiceResponseDto.setDiscount(discount1);
-//            invoiceResponseDto.setTotalAmount(totalAmountAfterDiscount1);
-//        } else if (totalAmount.compareTo(BigDecimal.valueOf(300000)) > 0) {
-//            invoiceResponseDto.setDiscount(discount2);
-//            invoiceResponseDto.setTotalAmount(totalAmountAfterDiscount2);
-//        } else {
-//            invoiceResponseDto.setDiscount(BigDecimal.valueOf(0));
-//            invoiceResponseDto.setTotalAmount(totalAmount);
+//        Invoice invoice = new Invoice();
+//        invoice.setIdOrder(invoiceRequestDto.getIdOrder());
+//        invoice.setIdTable(invoiceRequestDto.getIdTable());
+//        invoice.setNameMenu(getNameMenu);
+//        invoice.setPriceMenu(getPriceMenu);
+//        invoice.setIdMenu(getIdMenu);
+//        invoice.setNumberTable(getNumberTable);
+//        invoice.setQuantityMenu(getQuantityMenu);
+//        invoice.setServiceCharge(serviceCharge);
+//        invoice.setSubTotal(subTotal);
+//        invoice.setTax(tax);
+
+
+//        if (discountQty > 5) {
+//            getDiscount = BigDecimal.valueOf(50000);
 //        }
+//         totalAmountDiscount = totalAmount.subtract(getDiscount);
+//
+//        invoice.setDiscount(getDiscount);
+//        invoice.setTotalAmount(totalAmountDiscount);
+
+//        invoiceRepository.save(invoice);
+
+//        InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
+//        invoiceResponseDto.setIdInvoice(invoice.getIdInvoice());
+//        invoiceResponseDto.setIdOrder(getIdOrder);
+//        invoiceResponseDto.setNumberTable(getNumberTable);
+//        invoiceResponseDto.setIdTable(getIdTable);
+//        invoiceResponseDto.setNameMenu(getNameMenu);
+//        invoiceResponseDto.setPriceMenu(getPriceMenu);
+//        invoiceResponseDto.setQuantityMenu(getQuantityMenu);
+
+//        invoiceResponseDto.setAllOrder(orders.values());
+//        invoiceResponseDto.setSubTotal(subTotal);
+//        invoiceResponseDto.setTax(tax);
+//        invoiceResponseDto.setServiceCharge(serviceCharge);
+//        invoiceResponseDto.setDiscount(getDiscount);
+//        invoiceResponseDto.setTotalAmount(totalAmountDiscount);
+//
+//
+//        return invoiceResponseDto;
 
         return invoiceResponseDto;
 
+    }
+
+    private InvoiceResponseDto totalInvoice() {
+        InvoiceResponseDto invoiceResponseDtos = new InvoiceResponseDto();
+
+        Integer totalQtyMenu = 0;
+        BigDecimal subTotal = BigDecimal.valueOf(0);
+
+        HashMap<Integer, OrderResponseDto> map = orders;
+        for (Map.Entry<Integer, OrderResponseDto> x: map.entrySet()) {
+            Integer idOrder = x.getValue().getIdOrder();
+            BigDecimal price = x.getValue().getPriceMenu();
+            Integer qty = x.getValue().getQuantityMenu();
+            BigDecimal subTotals = price.multiply(new BigDecimal(qty));
+
+            totalQtyMenu += x.getValue().getQuantityMenu();
+            subTotal = subTotal.add(subTotals);
+
+            invoiceResponseDtos.setSubTotal(subTotal);
+            invoiceResponseDtos.setTotalQty(totalQtyMenu);
+        }
+
+        return invoiceResponseDtos;
     }
 
     public Invoice findByIdInvoice(Integer id) {

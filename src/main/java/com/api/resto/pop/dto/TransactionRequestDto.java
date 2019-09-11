@@ -11,7 +11,7 @@ public class TransactionRequestDto {
 
     @PositiveOrZero
     @NotNull(message = "Id Invoice Must be Filled")
-    private Integer idInvoice;
+    private Integer idTable;
 
     @PositiveOrZero
     @NotNull(message = "Cash Must be Filled")

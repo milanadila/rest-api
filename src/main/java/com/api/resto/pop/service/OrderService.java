@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,6 +74,10 @@ public class OrderService {
         orders.put(orderFood.getIdOrder(), orderResponseDto);
         log.info("Yang ini nih: " + orders.toString());
         return orderResponseDto;
+    }
+
+    public Collection<OrderResponseDto> listOrder() {
+        return orders.values();
     }
 
     public OrderFood findByIdOrder(Integer id) {

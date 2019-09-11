@@ -1,21 +1,22 @@
 package com.api.resto.pop.service;
 
 import com.api.resto.pop.dto.InvoiceResponseDto;
-import com.api.resto.pop.dto.InvoiceRequestDto;
 import com.api.resto.pop.dto.OrderResponseDto;
 import com.api.resto.pop.entity.Invoice;
-import com.api.resto.pop.entity.OrderFood;
 import com.api.resto.pop.entity.TableOrder;
 import com.api.resto.pop.exception.IdNotFoundException;
 import com.api.resto.pop.repository.InvoiceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class InvoiceService {
 
@@ -39,6 +40,12 @@ public class InvoiceService {
 
     OrderService x = new OrderService();
     HashMap<Integer, OrderResponseDto> orders = x.getHashMap();
+
+   private static HashMap<Integer, InvoiceResponseDto> totalOrders = new HashMap();
+
+   public HashMap<Integer, InvoiceResponseDto> getHashTotal() {
+       return totalOrders;
+   }
 
     public InvoiceResponseDto showOrder(Integer tableId) {
         TableOrder tableOrder = tableService.findByIdTable(tableId);
@@ -129,7 +136,8 @@ public class InvoiceService {
 //
 //
 //        return invoiceResponseDto;
-
+        totalOrders.put(tableId, invoiceResponseDto);
+        log.info("Ini yg total semuanya: " + totalOrders.toString());
         return invoiceResponseDto;
 
     }
@@ -142,7 +150,6 @@ public class InvoiceService {
 
         HashMap<Integer, OrderResponseDto> map = orders;
         for (Map.Entry<Integer, OrderResponseDto> x: map.entrySet()) {
-            Integer idOrder = x.getValue().getIdOrder();
             BigDecimal price = x.getValue().getPriceMenu();
             Integer qty = x.getValue().getQuantityMenu();
             BigDecimal subTotals = price.multiply(new BigDecimal(qty));
@@ -155,6 +162,10 @@ public class InvoiceService {
         }
 
         return invoiceResponseDtos;
+    }
+
+    public Collection<InvoiceResponseDto> listTotalOrder() {
+        return totalOrders.values();
     }
 
     public Invoice findByIdInvoice(Integer id) {

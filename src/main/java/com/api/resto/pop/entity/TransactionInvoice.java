@@ -14,8 +14,8 @@ public class TransactionInvoice {
     @Column(name = "Id_Transaction")
     private Integer idTransaction;
 
-    @Column(name = "Id_Invoice")
-    private Integer idInvoice;
+    @Column(name = "Id_Table")
+    private Integer idTable;
 
     @Column(name = "Total_Amount")
     private BigDecimal totalAmount;
